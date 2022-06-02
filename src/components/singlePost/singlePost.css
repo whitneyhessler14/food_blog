@@ -76,3 +76,15 @@
     display: flex;
     line-height: 25px;
 }
+
+.singlePostIcon:first-child {
+    color: teal;
+  }
+  .singlePostIcon:last-child {
+    color: tomato;
+  }
+
+  .singlePostIcon {
+    margin-left: 10px;
+    cursor: pointer;
+  }

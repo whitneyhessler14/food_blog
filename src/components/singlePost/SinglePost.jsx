@@ -9,8 +9,8 @@ export default function SinglePost() {
             className="singlePostImg" />
             <h1 className="singlePostTitle">Growing Beets
                 <div className="singlePostEdit">
-                    <button className="editButton">Edit</button>
-                    <button className="deleteButton">Delete</button>
+                    <i className="singlePostIcon far fa-edit"></i>
+                    <i className="singlePostIcon far fa-trash-alt"></i>
                 </div>
             </h1>
             <div className="singlePostInfo">
