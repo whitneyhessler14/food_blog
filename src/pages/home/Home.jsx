@@ -5,8 +5,8 @@ import Posts from "../../components/posts/Posts"
 export default function Home() {
     return (
         <>
+        <TitleHeader />
         <div className="home">
-            <TitleHeader />
             <Posts />
         </div>
         </>
