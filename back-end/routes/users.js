@@ -24,6 +24,5 @@ router.put("/:id", async (req, res)=>{
 }
 })
 
-//Delete user account
 
 module.exports = router
