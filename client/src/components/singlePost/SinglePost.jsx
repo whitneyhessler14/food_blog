@@ -1,25 +1,107 @@
-import "./singlePost.css"
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
+import { Context } from "../../context/Context";
+import "./singlePost.css";
 
 export default function SinglePost() {
-    return (
-        <div className="singlePostWrapper">
-            <img 
-            src="https://www.almanac.com/sites/default/files/styles/max_1300x1300/public/image_nodes/beets_by_darasp_kran_ss_crop.jpg?itok=nwddFT4d"
-            alt=""
-            className="singlePostImg" />
-            <h1 className="singlePostTitle">Growing Beets
-                <div className="singlePostEdit">
-                    <i className="singlePostIcon far fa-edit"></i>
-                    <i className="singlePostIcon far fa-trash-alt"></i>
-                </div>
-            </h1>
-            <div className="singlePostInfo">
-                <span className="singlePostAuthor"> Author: Whitney Hessler</span>
-                <span className="singlePostDate"> June 1, 2022</span>
-            </div>
-            <p className="postBody">
-            A staple in our gardens, beets grow easily and you won’t have to wait long to harvest their tasty roots. You can eat their green tops, too, so they’re a dual-purpose crop! Learn all you need to know about growing beets—from planting to harvest. Beets—or “beet roots”—are a colorful, cool-season crop that is easy to grow from seed in well-prepared soil and grows quickly in full sun. They are a great choice for northern gardeners because they can survive frost and near-freezing temperatures. This also makes them great as a fall crop. If you are a beginner, look for bolt-resistant varieties, which have less of a chance of bolting (maturing too quickly) in warm weather. There are many different varieties of beets, showcasing deep red, yellow, white, or striped roots of different shapes.  Beet roots can be harvested from the time they’re about the size of a golf ball to the size of a tennis ball; larger roots may be tough and woody. Plus, beet greens have a delicious and distinctive flavor and hold even more nutrition than the roots!
-            </p>
+  const location = useLocation();
+  const path = location.pathname.split("/")[2];
+  const [post, setPost] = useState({});
+  const PF = "http://localhost:5000/images/";
+  const { user } = useContext(Context);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [updateMode, setUpdateMode] = useState(false);
+
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axios.get("/posts/" + path);
+      setPost(res.data);
+      setTitle(res.data.title);
+      setDesc(res.data.desc);
+    };
+    getPost();
+  }, [path]);
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/posts/${post._id}`, {
+        data: { username: user.username },
+      });
+      window.location.replace("/");
+    } catch (err) {}
+  };
+
+  const handleUpdate = async () => {
+    try {
+      await axios.put(`/posts/${post._id}`, {
+        username: user.username,
+        title,
+        desc,
+      });
+      setUpdateMode(false)
+    } catch (err) {}
+  };
+
+  return (
+    <div className="singlePost">
+      <div className="singlePostWrapper">
+        {post.photo && (
+          <img src={PF + post.photo} alt="" className="singlePostImg" />
+        )}
+        {updateMode ? (
+          <input
+            type="text"
+            value={title}
+            className="singlePostTitleInput"
+            autoFocus
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        ) : (
+          <h1 className="singlePostTitle">
+            {title}
+            {post.username === user?.username && (
+              <div className="singlePostEdit">
+                <i
+                  className="singlePostIcon far fa-edit"
+                  onClick={() => setUpdateMode(true)}
+                ></i>
+                <i
+                  className="singlePostIcon far fa-trash-alt"
+                  onClick={handleDelete}
+                ></i>
+              </div>
+            )}
+          </h1>
+        )}
+        <div className="singlePostInfo">
+          <span className="singlePostAuthor">
+            Author:
+            <Link to={`/?user=${post.username}`} className="link">
+              <b> {post.username}</b>
+            </Link>
+          </span>
+          <span className="singlePostDate">
+            {new Date(post.createdAt).toDateString()}
+          </span>
         </div>
-    )
+        {updateMode ? (
+          <textarea
+            className="singlePostDescInput"
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+          />
+        ) : (
+          <p className="singlePostDesc">{desc}</p>
+        )}
+        {updateMode && (
+          <button className="singlePostButton" onClick={handleUpdate}>
+            Update
+          </button>
+        )}
+      </div>
+    </div>
+  );
 }

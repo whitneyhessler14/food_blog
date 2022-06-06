@@ -67,7 +67,7 @@ router.get("/:id", async (req, res) => {
     }
   });
 
-  //Get all posts
+//Get all posts
 router.get("/", async (req, res) => {
     const username = req.query.user;
     try {

@@ -14,8 +14,8 @@ mongoose.connect(process.env.MONGO_URL, {
 }).then(console.log("Connected")).catch(err=>console.log(err));
 
 const storage = multer.diskStorage({
-    destination:(req,file,cb) => {
-        cb(null,"images")
+    destination: (req,file,cb) => {
+        cb(null,"images");
     },
     filename: (req, file, cb) => {
     cb(null, req.body.name);
@@ -24,12 +24,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage:storage})
 app.post("/back-end/upload", upload.single("file"), (req, res) => {
-    res.status(200).json("Photo uploaded")
-})
+    res.status(200).json("Photo uploaded");
+});
 
-app.use("/back-end/auth", authRoute)
-app.use("/back-end/users", userRoute)
-app.use("/back-end/posts", postRoute)
+app.use("/back-end/auth", authRoute);
+app.use("/back-end/users", userRoute);
+app.use("/back-end/posts", postRoute);
 
 app.listen("5000", () => {
     console.log("Back end is running on port 5000")
