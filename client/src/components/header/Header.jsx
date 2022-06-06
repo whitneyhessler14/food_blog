@@ -4,7 +4,10 @@ import { Context } from "../../context/Context"
 import { useContext } from "react"
 
 export default function Header() {
-    const {user} = useContext(Context)
+    const {user, dispatch} = useContext(Context);
+    const handleLogout = () => {
+        dispatch({type:"LOGOUT"})
+    }
     return (
         <div className="header">
             <div className="leftHeader"></div>
@@ -20,7 +23,7 @@ export default function Header() {
                         WRITE
                      </Link>
                 </li>
-          {user && <li className="topListItem">LOGOUT</li>}
+          <li className="topListItem" onClick={handleLogout}>{user && "LOGOUT"}</li>
         </ul>
             </div>
             <div className="rightHeader">
