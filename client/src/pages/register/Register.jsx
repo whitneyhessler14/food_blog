@@ -10,13 +10,15 @@ export default function Register() {
   const [error, setError] = useState(false)
   const handleSubmit= async (e) => {
     e.preventDefault();
+    setError(false);
     try{
-    const res = await axios.post("/auth/register", {
-      username,
-      email,
-      password,
-    });
-  } catch(err){
+      const res = await axios.post("/auth/register", {
+        username,
+        email,
+        password,
+      });
+    res.data && window.location.replace("/login");
+  } catch(error){
     setError(true)
   }
 };
@@ -49,6 +51,7 @@ export default function Register() {
         <button className="registerLoginButton">
           <Link className="link" to="/login">Login</Link>
         </button>
+        {error && <span>Something went wrong!</span>}
     </div>
     )
 }

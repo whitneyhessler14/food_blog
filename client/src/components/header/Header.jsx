@@ -1,8 +1,10 @@
 import "./Header.css"
 import { Link } from "react-router-dom"
+import { Context } from "../../context/Context"
+import { useContext } from "react"
 
 export default function Header() {
-    const user = false
+    const {user} = useContext(Context)
     return (
         <div className="header">
             <div className="leftHeader"></div>
