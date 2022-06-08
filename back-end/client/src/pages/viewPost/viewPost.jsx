@@ -6,5 +6,5 @@ export default function ViewPost() {
         <div className="viewPost">
             <SinglePost />
         </div>
-    )
+    );
 }

@@ -10,7 +10,7 @@ const path = require("path");
 
 dotenv.config();
 app.use(express.json());
-app.use("/images", express.static(path.join(__dirname,"/images")))
+app.use("/images", express.static(path.join(__dirname, "/images")))
 
 mongoose.connect(process.env.MONGO_URL, {
 }).then(console.log("Connected")).catch(err=>console.log(err));
@@ -33,6 +33,12 @@ app.use("/back-end/auth", authRoute);
 app.use("/back-end/users", userRoute);
 app.use("/back-end/posts", postRoute);
 
-app.listen("5000", () => {
+app.use(express.static(path.join(__dirname, '/client/build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+});
+
+app.listen(process.env.PORT || 5000, () => {
     console.log("Back end is running on port 5000")
 })

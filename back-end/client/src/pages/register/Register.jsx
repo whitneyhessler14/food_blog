@@ -1,24 +1,25 @@
 import "./register.css"
 import { Link } from "react-router-dom"
 import {useState} from "react";
-import axios from "axios";
+import {axiosInstance} from "../../config";
 
 export default function Register() {
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState(false)
+
   const handleSubmit= async (e) => {
     e.preventDefault();
     setError(false);
     try{
-      const res = await axios.post("/auth/register", {
+      const res = await axiosInstance.post("/auth/register", {
         username,
         email,
         password,
       });
     res.data && window.location.replace("/login");
-  } catch(error){
+  } catch(err){
     setError(true)
   }
 };
@@ -53,5 +54,5 @@ export default function Register() {
         </button>
         {error && <span>Something went wrong!</span>}
     </div>
-    )
+    );
 }
