@@ -1,4 +1,6 @@
-# Welcome to Beets-me, the only blog completely dedicated to exclusive beet content. Want to talk about parsnips? No. Carrots? No. Sweet Potatoes? Get out of here. The only root vegetable allowed in this blog and our hearts is beets. Enjoy.
+# Introduction
+
+Welcome to Beets-me, the only blog completely dedicated to exclusive beet content. Want to talk about parsnips? No. Carrots? No. Sweet Potatoes? Get out of here. The only root vegetable allowed in this blog and our hearts is beets. Enjoy.
 
 Link to webpage: https://beets-me.herokuapp.com/
 
